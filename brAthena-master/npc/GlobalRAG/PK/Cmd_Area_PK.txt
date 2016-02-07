@@ -1,0 +1,6 @@
+-	script	Area_pk	-1,{
+end;
+OnInit:
+setcell "prontera",175,272,138,306,cell_pvp,1;
+end;
+}
