@@ -554,11 +554,10 @@ int unit_walktoxy( struct block_list *bl, short x, short y, int flag)
 			char e_msg[150];
 			e_tick = (battle_config.cellpvp_walkout_delay/1000) - e_tick;
 			if( e_tick > 99 )
-					sprintf(e_msg, "Cooling down walk delay. Wait %.1f minutes.", (double)e_tick / 60);
+					sprintf(e_msg, "Aguarde para poder andar. tempo %.1f minutos.", (double)e_tick / 60);
 			else
-					sprintf(e_msg, "Cooling down walk delay. Wait %d seconds.", e_tick);
+					sprintf(e_msg, "Aguarde para poder andar. tempo %d segundos.", e_tick);
 
-			//clif->colormes(sd->fd,color_table[COLOR_RED],e_msg);
 			clif->messagecolor_self(sd->fd, COLOR_RED, e_msg);
 			return 0;
 		}
