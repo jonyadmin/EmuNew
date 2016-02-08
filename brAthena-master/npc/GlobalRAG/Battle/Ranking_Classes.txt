@@ -1,0 +1,32 @@
+prontera,165,167,4	script	Ranking Global	837,{
+switch(select("Ranking de Classes:Informações:Fechar")) {
+case 1:
+mes "     [~~Ranking de Classes~~]";
+mes "Ranking da classes:";
+query_sql( "SELECT `name_player`,`mortes`,`kills` FROM `ranking_classes` ORDER BY `kills` DESC LIMIT 10",.@Name$,.@Mortes,.@Vitorias );
+if( getarraysize( .@Name$ ) ){
+mes "[ Nome ] ~> [^0000FF Kills ^000000] ~> [^FF3355 Mortes^000000]";
+for( set .@i,0; .@i < getarraysize( .@Name$ ); set .@i,.@i + 1 )
+mes "["+( .@i + 1 )+"°] "+.@Name$[.@i]+" ~ [ ^0000FF"+.@Vitorias[.@i]+"^000000 ]~[ ^FF3355"+.@Mortes[.@i]+"^000000 ]";		
+close2;
+goto inicio;
+end;
+}else{	
+mes "     [~~Ranking de Classes~~]";
+mes "Ninguém tem pontos de Vitoria no Origem ainda.";
+close2;
+goto inicio;
+end;
+}
+
+case 2:
+mes "[Ranking de Classes]";
+mes "O ranking de classes funciona da seguinte maneira";
+mes "Os Kills de Mortes do PvP Oringens+Extreme+Área PK+WOE+PvP King e outro PvPs";
+mes "São guardados e calculados o ranking mostra o char da sua classe que teve mais kill e morte do servidor todo";
+mes "Tornando ele o mais forte daquela classe";
+close;
+
+case 3:
+close;
+}

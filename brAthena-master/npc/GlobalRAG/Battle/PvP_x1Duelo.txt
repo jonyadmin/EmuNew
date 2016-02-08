@@ -1,0 +1,227 @@
+//====== eAthena Script =========================================
+//= Duel Arena
+//====== Por ===================================================
+//= [NightmareA]
+//====== Versão ================================================
+//= 1.0
+//====== Compativel Com =========================================
+//= eAthena SVN SQL
+//====== Descrição =============================================
+//= Permite aos jogadores duelar entre si apostando Zennys
+//====== Comentários ===========================================
+//= 1.0 - NPC Criado					 [NightmareA]
+//=============================================================
+prontera,166,206,5	script	Arena Duelo[1x1]  	728,{
+
+//========= Nome do NPC =============
+set @npc$,"[^FF0000Porteira Arena 1x1^000000]";
+//========== Mapa do Duelo ==========
+set $mapa_duel$,"pvp_n_1-5";
+//===================================
+
+mes @npc$;
+if($arena_duel == 0) goto L_DUEL;
+mes "A arena está sendo usada nesse momento";
+mes "volte mais tarde";
+close;
+
+L_DUEL:
+	mes "Deseja entrar na arena 1x1?";
+	menu "Sim",L_DUEL_INI,"Não,obrigado!",-;
+	mes "Volte quando quizer usar meus serviços";
+	close;
+	
+L_DUEL_INI:
+	if($char_duel1$=="") goto L_DESAFIANTE;
+	else {goto L_DESAFIADOR; end;}
+	end;
+
+L_DESAFIANTE:
+	set $char_duel1$,strcharinfo(0);
+	initnpctimer "DUELTIMER01";
+	warp $mapa_duel$,0,0;
+	end;
+
+L_DESAFIADOR:
+	set $char_duel2$,strcharinfo(0);
+	stopnpctimer "DUELTIMER01";
+	initnpctimer "DUELTIMER02";
+	warp $mapa_duel$,0,0;
+	end;
+	
+OnInit:
+
+set $arena_duel,0;
+set $char_duel1$,"";//Desafiante
+set $char_duel2$,"";//Desafiador
+stopnpctimer "DUELTIMER01";
+stopnpctimer "DUELTIMER02";
+stopnpctimer "DUELTIMER03";
+waitingroom "Arena [1x1]",0;
+end;
+}
+pvp_n_1-5,1,1,1	script	DUELTIMER01	-1,{
+
+OnTimer1000:
+	announce ""+$char_duel1$+" procura um adversário na arena de duelos",bc_all,0x0000FF;
+	mapannounce $mapa_duel$,"[ Mediador da Arena 1x1 ]: Esperaremos 2 minutos por um adversário",bc_map,0x800080;
+	end;
+
+OnTimer60000:
+	announce "Ninguém está com coragem para enfrentar "+$char_duel1$+" em um duelo",0x0000FF;
+	end;
+	
+OnTimer120000:
+	announce "Todos ficaram com medo de enfrentar "+$char_duel1$+"",bc_all,0x0000FF;
+	mapannounce $mapa_duel$,"[ Mediador da Arena 1x1 ]: irei manda-lo para Prontera",bc_map,0x800080;
+	end;
+OnTimer125000:
+	mapwarp $mapa_duel$,"prontera",150,150;
+	announce "A arena duel está livre",bc_all,0x0000FF;
+	set $arena_duel,0;
+	set $char_duel1$,"";//Desafiante
+	set $char_duel2$,"";//Desafiador
+	stopnpctimer "DUELTIMER01";
+	stopnpctimer "DUELTIMER02";
+	stopnpctimer "DUELTIMER03";
+	end;
+}
+pvp_n_1-5,1,1,1	script	DUELTIMER02	-1,{
+
+OnTimer1000:
+	set $arena_duel,1;
+	announce ""+$char_duel2$+" aceitou o desafio de "+$char_duel1$+"",bc_all,0x0000FF;
+	end;
+
+OnTimer3000:
+	mapannounce $mapa_duel$,"[ Mediador da Arena 1x1 ]: Vocês tem 5 minutos para duelar",bc_map,0x0000FF;
+	end;
+
+OnTimer4000:
+	mapannounce $mapa_duel$,"[ Mediador da Arena 1x1 ]: Duelo começa em 5 segundo",bc_map,0x0000FF;
+	end;
+	
+OnTimer5000:
+	mapannounce $mapa_duel$,"[ Mediador da Arena 1x1 ]: Contagem 5",bc_map,0x0000FF;
+	end;
+	
+OnTimer6000:
+	mapannounce $mapa_duel$,"[ Mediador da Arena 1x1 ]: Contagem 4",bc_map,0x0000FF;
+	end;
+
+OnTimer7000:
+	mapannounce $mapa_duel$,"[ Mediador da Arena 1x1 ]: Contagem 3",bc_map,0x0000FF;
+	end;
+	
+OnTimer8000:
+	mapannounce $mapa_duel$,"[ Mediador da Arena 1x1 ]: Contagem 2",bc_map,0x0000FF;
+	end;
+	
+OnTimer9000:
+	mapannounce $mapa_duel$,"[ Mediador da Arena 1x1 ]: Contagem 1",bc_map,0x0000FF;
+	end;
+	
+OnTimer10000:
+	mapannounce $mapa_duel$,"[ Mediador da Arena 1x1 ]: Luta !!!",bc_map,0x0000FF;
+	setmapflag $mapa_duel$,mf_pvp;
+	end;
+
+OnTimer300000:
+	mapannounce $mapa_duel$,"[ Mediador da Arena 1x1 ]: O Tempo acabou !",bc_map,0x0000FF;
+	removemapflag $mapa_duel$,mf_pvp;
+	end;
+	
+OnTimer300010:
+	mapwarp $mapa_duel$,"prontera",150,150;
+	announce "A arena duel está livre",bc_all,0x0000FF;
+	set $arena_duel,0;
+	set $char_duel1$,"";//Desafiante
+	set $char_duel2$,"";//Desafiador
+	stopnpctimer "DUELTIMER01";
+	stopnpctimer "DUELTIMER02";
+	stopnpctimer "DUELTIMER03";
+	end;
+}
+pvp_n_1-5,1,1,1	script	DUELTIMER03	-1,{
+
+OnTimer1000:
+	mapannounce $mapa_duel$,"[ Mediador da Arena 1x1 ]: Fale com o NPC para sair da sala",bc_map,0x0000FF;
+	enablenpc "Arena Duel#Mediador";
+	end;
+
+OnTimer2000:
+	mapannounce $mapa_duel$,"[ Mediador da Arena 1x1 ]: Você tem 1 minuto para falar com o NPC ou sera retirado da sala",bc_map,0x0000FF;
+	end;
+
+OnTimer360000:
+	mapannounce $mapa_duel$,"[ Mediador da Arena 1x1 ]: Seu tempo acabou, irei leva-lo para Prontera",bc_map,0x0000FF;
+	end;
+	
+OnTimer362000:
+	mapwarp $mapa_duel$,"prontera",150,150;
+	announce "A arena duel está livre",bc_all,0x0000FF;
+	set $arena_duel,0;
+	set $char_duel1$,"";//Desafiante
+	set $char_duel2$,"";//Desafiador
+	stopnpctimer "DUELTIMER01";
+	stopnpctimer "DUELTIMER02";
+	stopnpctimer;
+	end;
+}
+pvp_n_1-5,99,98,4	script	Arena Duel#Mediador	899,{
+set @npc$,"[^FF0000Mediador^000000]";
+mes @npc$;
+mes "Parabéns, você venceu o duelo !";mes "Volte mais vezes e mostre que e o Melhor!";
+next;
+announce "[ Mediador da Arena 1x1 ]: "+strcharinfo(0)+" venceu o duelo !",bc_all,0x0000FF;
+warp "prontera",150,150;
+set $arena_duel,0;
+set $char_duel1$,"";//Desafiante
+set $char_duel2$,"";//Desafiador
+stopnpctimer "DUELTIMER01";
+stopnpctimer "DUELTIMER02";
+stopnpctimer "DUELTIMER03";
+disablenpc "Arena Duel#Mediador";
+end;
+
+OnInit:
+	disablenpc "Arena Duel#Mediador";
+	end;
+}
+-	script	ArenaDuel#PCKill	-1,{
+
+OnPCKillEvent:
+	getmapxy @map$,@x,@y,0;
+	if ( @map$ == $mapa_duel$ ) goto L_DUEL;
+	end;
+	
+L_DUEL:
+	initnpctimer "DUELTIMER03";
+	stopnpctimer "DUELTIMER01";
+	stopnpctimer "DUELTIMER02";
+	end;
+}
+-	script	ArenaDuel#PCLogout	-1,{
+
+OnPCLogoutEvent:
+	getmapxy @map$,@x,@y,0;
+	if ( @map$ == $mapa_duel$ ) goto L_DUEL;
+	end;
+	
+L_DUEL:
+	if(strcharinfo(0) == $char_duel1$ && $arena_duel == 1) goto L_DESAFIANTE;
+	if(strcharinfo(0) == $char_duel2$ && $arena_duel == 1) goto L_DESAFIADOR;
+	end;
+
+L_DESAFIANTE:
+	initnpctimer "DUELTIMER03";
+	stopnpctimer "DUELTIMER01";
+	stopnpctimer "DUELTIMER02";
+	end;
+
+L_DESAFIADOR:
+	initnpctimer "DUELTIMER03";
+	stopnpctimer "DUELTIMER01";
+	stopnpctimer "DUELTIMER02";
+	end;
+}pvp_n_1-5	mapflag	nowarptopvp_n_1-5	mapflag	nowarppvp_n_1-5	mapflag	nopenaltypvp_n_1-5	mapflag	nosave	SavePointpvp_n_1-5	mapflag	nobranchpvp_n_1-5	mapflag	pvppvp_n_1-5	mapflag	gvg	offpvp_n_1-5	mapflag	noteleport

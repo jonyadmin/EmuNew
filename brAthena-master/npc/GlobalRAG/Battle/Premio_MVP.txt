@@ -1,0 +1,23 @@
+-	script	PremiadorMVP	-1,{
+OnDay0120:
+OnDay0220:
+OnDay0320:
+OnDay0420:
+OnDay0520:
+OnDay0620:
+OnDay0720:
+OnDay0820:
+OnDay0920:
+OnDay1020:
+OnDay1120:
+OnDay1220:
+query_sql "SELECT `name`,`Count` FROM `E-MVPRank` ORDER BY `Count` DESC LIMIT 1",.@Name$,.@ratio;
+query_sql "SELECT `account_id` FROM `char` WHERE `name`='"+.@Name$+"'",.@conta;
+query_sql "SELECT `value` FROM `acc_reg_num_db` WHERE `key`='#CASHPOINTS' AND `account_id`='"+.@conta+"'",.@cash;
+query_sql "UPDATE `acc_reg_num_db` SET `value`=`value`+500 WHERE `key`='#CASHPOINTS' AND `account_id`='"+.@conta+"'";
+announce "[ RagnaChaos ]: Parabéns "+.@Name$+" Você eo Matador desse mês do Ranking MVP com "+.@ratio+" pontos",8;
+announce "[ RagnaChaos ]: E ele Ganhou a Quantia de 500 de cash por ser o Matador de MVP!! Parabéns!",8;
+query_sql "TRUNCATE TABLE `E-MVPRank`";
+announce "[ RagnaChaos ]: O Ranking MVP foi Resetado!",8;
+end;
+}

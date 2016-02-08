@@ -1,0 +1,179 @@
+prontera,187,210,4	script	Arena MVP	1_ETC_01,{
+cutin "gc_verkhasel01.bmp",2;
+set .n$, "[^1E90FFArena MVP^000000]";
+set $@LIMIT, 50;
+mes .n$;
+mes "Sou o lider do portal para a cidade dos MVPS";
+mes "Qual Arena você deseja ir?";
+switch(select("^FF3355Arena Fácil^000000 [^1E90FF"+getmapusers ("pvp_n_1-4")+"^000000/^FF335550^000000]:^FF3355Arena Médio^000000 [^1E90FF"+getmapusers ("pvp_n_1-1")+"^000000/^FF335550^000000]:^FF3355Arena Difícil^000000 [^1E90FF"+getmapusers ("pvp_y_1-5")+"^000000/^FF335550^000000]:^1E90FFInformações^000000")){
+
+case 1:
+next;
+mes .n$;
+mes "Tem certeza que quer entra na Arena Fácil?";
+switch(select("^FF3355Sim Tenho^000000:^FF3355Não obrigado^000000")) {
+
+case 1:
+next;
+mes .n$;
+mes "Ok boa viagem";
+close2;
+cutin "",255;
+warp "pvp_n_1-4",171,121;
+end;
+
+case 2:
+next;
+mes .n$;
+mes "OK até mais tarde";
+cutin "",255;
+close;
+}
+
+case 2:
+next;
+mes .n$;
+mes "Tem certeza que quer entra na Arena Fácil?";
+switch(select("^FF3355Sim Tenho^000000:^FF3355Não obrigado^000000")) {
+
+case 1:
+next;
+mes .n$;
+mes "Ok boa viagem";
+close2;
+cutin "",255;
+warp "pvp_n_1-1",0,0;
+end;
+
+case 2:
+next;
+mes .n$;
+mes "OK até mais tarde";
+cutin "",255;
+close;
+}
+
+case 3:
+next;
+mes .n$;
+mes "Tem certeza que quer entra na Arena Fácil?";
+switch(select("^FF3355Sim Tenho^000000:^FF3355Não obrigado^000000")) {
+
+case 1:
+next;
+mes .n$;
+mes "Ok boa viagem";
+close2;
+cutin "",255;
+warp "pvp_y_1-5",0,0;
+end;
+
+case 2:
+next;
+mes .n$;
+mes "OK até mais tarde";
+cutin "",255;
+close;
+}
+
+case 4:
+next;
+mes .n$;
+mes "informações";
+mes "^FF3355Arena Facil^000000";
+mes "Monstros Mvps que tem lá:";
+mes "Drácula,Eddga,Faraó,Freeoni,General Tartaruga,Leão de Vinhas,Maya Macho,Orc Heroi";
+next;
+mes "^FF3355Arena Media^000000";
+mes "Monstros Mvps que tem lá:";
+mes "Abelha Rainha,Bafomé,Hatii,Samurai Encarnado,Besouro Ladrão Dourado,Serpente Suprema";
+next;
+mes "^FF3355Arena Dificil^000000";
+mes "Monstros Mvps que tem lá:";
+mes "Belzebu,Bispo Decadente,Kiel D-01,Ktullanux,ifrit,Satan Morroc";
+cutin "",255;
+close;
+}
+OnInit:
+	waitingroom "",0;
+OnTimer1000:
+	setarray .@RoomDisplay$,"[Arena MVP]","[Arena Fácil]","[Arena Média]","[Arena Díficil]";
+	delwaitingroom;
+	waitingroom .@RoomDisplay$[rand(0,3)],0;
+	initnpctimer;
+}
+
+pvp_n_1-1,86,71,4	script	Saída::sair	1_M_INNKEEPER,{
+mes "[Saída]";
+mes "Você realmente deseja saír?";
+switch(select("Sim","^FF3355Agora não.^000000")){
+
+case 1:
+warp "prontera",156,165;
+close;
+case 2:
+close;
+}
+}
+pvp_y_1-5,158,96,4	duplicate(sair)	Saída#02	1_M_INNKEEPER
+pvp_n_1-4,100,116,4	duplicate(sair)	Saída#03	1_M_INNKEEPER
+
+//-------------------------------Arena Facil---------------------------------
+pvp_n_1-4,0,0	monster	Drácula	1389,3,24000,120000
+pvp_n_1-4,0,0	monster	Eddga	1115,3,24000,120000
+pvp_n_1-4,0,0	monster	Faraó	1157,3,24000,120000
+pvp_n_1-4,0,0	monster	Freeoni	1159,3,24000,120000
+pvp_n_1-4,0,0	monster	General Tartaruga	1312,3,24000,120000
+pvp_n_1-4,0,0	monster	Leão de Vinhas	1991,3,24000,120000
+pvp_n_1-4,0,0	monster	Maya Macho	1289,3,24000,120000
+pvp_n_1-4,0,0	monster	Orc Heroi	1087,3,24000,120000
+
+//-------------------------------Arena Media---------------------------------
+pvp_n_1-1,0,0	monster	Abelha Rainha	1059,6,24000,120000
+pvp_n_1-1,0,0	monster	Bafomé	1039,3,24000,120000
+pvp_n_1-1,0,0	monster	Hatii	1252,6,24000,120000
+pvp_n_1-1,0,0	monster	Samurai Encarnado	1492,6,24000,120000
+pvp_n_1-1,0,0	monster	Besouro Ladrão Dourado	1086,3,24000,120000
+pvp_n_1-1,0,0	monster	Serpente Suprema	1418,4,24000,120000
+
+//-------------------------------Arena Dificil---------------------------------
+pvp_y_1-5,0,0	monster	Belzebu	1873,6,24000,120000
+pvp_y_1-5,0,0	monster	Bispo Decadente	1871,7,24000,120000
+pvp_y_1-5,0,0	monster	Kiel D-01	1734,10,24000,120000
+pvp_y_1-5,0,0	monster	Ktullanux	1779,2,24000,120000
+pvp_y_1-5,0,0	monster	ifrit	1832,4,24000,120000
+pvp_y_1-5,0,0	monster	Satan Morroc	1917,2,240000,120000
+
+//-------------------------------FLAGS---------------------------------
+pvp_n_1-4	mapflag	pvp_nightmaredrop	off
+pvp_n_1-4	mapflag	pvp	off
+pvp_n_1-4	mapflag	nopenalty
+pvp_n_1-4	mapflag	nowarp
+pvp_n_1-4	mapflag	nomemo
+pvp_n_1-4	mapflag	noteleport
+pvp_n_1-4	mapflag	nowarpto
+pvp_n_1-4	mapflag	nosave	SavePoint
+pvp_n_1-4	mapflag	noreturn
+pvp_n_1-4	mapflag	nobranch
+
+pvp_n_1-1	mapflag	pvp_nightmaredrop	off
+pvp_n_1-1	mapflag	pvp	off
+pvp_n_1-1	mapflag	nopenalty
+pvp_n_1-1	mapflag	nowarp
+pvp_n_1-1	mapflag	nomemo
+pvp_n_1-1	mapflag	noteleport
+pvp_n_1-1	mapflag	nowarpto
+pvp_n_1-1	mapflag	nosave	SavePoint
+pvp_n_1-1	mapflag	noreturn
+pvp_n_1-1	mapflag	nobranch
+
+pvp_y_1-5	mapflag	pvp_nightmaredrop	off
+pvp_y_1-5	mapflag	pvp	off
+pvp_y_1-5	mapflag	nopenalty
+pvp_y_1-5	mapflag	nowarp
+pvp_y_1-5	mapflag	nomemo
+pvp_y_1-5	mapflag	noteleport
+pvp_y_1-5	mapflag	nowarpto
+pvp_y_1-5	mapflag	nosave	SavePoint
+pvp_y_1-5	mapflag	noreturn
+pvp_y_1-5	mapflag	nobranch

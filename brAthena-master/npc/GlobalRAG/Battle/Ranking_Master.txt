@@ -1,0 +1,83 @@
+prontera,164,166,4	script	Ranking Global	837,{
+inicio:
+mes "[PvP Extreme]";
+mes "Qual Ranking você deseja ver?";
+switch(select("Top PvP Origem:Top PvP Extreme:Top MVP:Top Woe:Top Break Emp:Fechar")) {
+
+case 1:
+next;
+query_sql( "SELECT `name_player`,`mortes`,`kills` FROM `ranking_pvp_dinus` ORDER BY `kills` DESC LIMIT 10",.@Name$,.@Mortes,.@Vitorias );
+
+if( getarraysize( .@Name$ ) ){
+mes "      [~~~~~~PvP Origem~~~~~~]";
+mes "[ Nome ] ~> [^0000FF Kills ^000000] ~> [^FF3355 Mortes^000000]";
+for( set .@i,0; .@i < getarraysize( .@Name$ ); set .@i,.@i + 1 )
+mes "["+( .@i + 1 )+"°] "+.@Name$[.@i]+" ~ [ ^0000FF"+.@Vitorias[.@i]+"^000000 ]~[ ^FF3355"+.@Mortes[.@i]+"^000000 ]";		
+close2;
+goto inicio;
+end;
+}else{	
+mes "        [~~~~~~PvP Origem~~~~~~]";
+mes "Ninguém tem pontos de Vitoria no Origem ainda.";
+close2;
+goto inicio;
+end;
+}
+
+case 2:
+next;
+query_sql( "SELECT `name_player`,`mortes`,`kills` FROM `ranking_pvp_extreme` ORDER BY `kills` DESC LIMIT 10",.@Name2$,.@Mortes2,.@Vitorias2 );
+if( getarraysize( .@Name2$ ) ){
+mes "       [~~~~~~PvP Extreme~~~~~~]";
+mes "[ Nome ] ~> [^0000FF Kills ^000000] ~> [^FF3355 Mortes^000000]";
+for( set .@i,0; .@i < getarraysize( .@Name2$ ); set .@i,.@i + 1 )
+mes "["+( .@i + 1 )+"°] "+.@Name2$[.@i]+" ~ [ ^0000FF"+.@Vitorias2[.@i]+"^000000 ]~[ ^FF3355"+.@Mortes2[.@i]+"^000000 ]";
+close2;
+goto inicio;
+end;
+}else{	
+mes "       [~~~~~~PvP Extreme~~~~~~]";
+mes "Ninguém tem pontos de Vitoria no Extreme ainda.";
+close2;
+goto inicio;
+end;
+}
+
+case 3:
+next;
+query_sql( "SELECT `name`,`Count` FROM `E-MVPRank` ORDER BY `Count` DESC LIMIT 5",.@Name3$,.@Count );
+if( getarraysize( .@Name3$ ) ){
+mes "       [~~~~~~Ranking MVP~~~~~~]";
+mes "[ Nome ] ~> [^0000FF Pontos Mvp ^000000]";
+for( set .@i,0; .@i < getarraysize( .@Name3$ ); set .@i,.@i + 1 )
+mes "[ "+( .@i + 1 )+". ] "+.@Name3$[.@i]+" ~ [^0000FFPontos "+.@Count[.@i]+"^000000]";
+}else{
+mes "       [~~~~~~Ranking MVP~~~~~~]";
+mes "Ninguém matou MVPs ainda aguarde.";
+}
+close;
+
+case 4:
+mes "[War of Emperium]";
+close;
+
+case 5:
+next;
+.@nb = query_sql( "select name, empbreak from `char` where empbreak > 0 order by empbreak desc limit 10", .@name5$, .@empbreak );
+if( getarraysize( .@name5$ ) ){
+	mes "^FF0000[Top 10 Emperium Ranking ]^000000";
+	for ( .@i = 0; .@i < .@nb; .@i++ )
+		mes "[^0000FF"+ ( .@i +1 ) +".^000000] ~ " + .@name5$[.@i] +" ~ ^FF0000"+ .@empbreak[.@i] +"^000000 Break(s)";
+	mes " ";
+	query_sql "select empbreak from `char` where char_id = "+ getcharid(0), .@empbreak;
+	mes "O Char ^0000FF["+ strcharinfo(0) +"]^000000 Teve ^FF0000" + .@empbreak + "^000000 Break(s)";
+}else{
+mes "    [~~~~~~Ranking TOP Break Emp~~~~~~]";
+mes "Ninguém Quebrou o Emperium ainda aguarde.";
+}
+close;
+
+case 6:
+close;
+}
+}
