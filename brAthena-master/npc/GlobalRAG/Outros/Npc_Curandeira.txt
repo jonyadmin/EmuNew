@@ -1,0 +1,38 @@
+prontera,153,193,5	script	Curandeira#hG1-1::HealerG	91,{
+OnTouch:
+percentheal 100,100;
+specialeffect2 65;
+specialeffect 66;
+emotion 51;
+close;
+}
+morocc.gat,159,96,5	duplicate(HealerG)	Curandeira#hG2-2	91
+ayothaya.gat,155,111,5	duplicate(HealerG)	Curandeira#hG2-3	91
+geffen.gat,121,61,5	duplicate(HealerG)	Curandeira#hG2-4	91
+umbala.gat,94,162,5	duplicate(HealerG)	Curandeira#hG2-5	91
+payon.gat,180,105,5	duplicate(HealerG)	Curandeira#hG2-6	91
+alberta.gat,185,144,5	duplicate(HealerG)	Curandeira#hG2-7	91
+aldebaran.gat,134,123,5	duplicate(HealerG)	Curandeira#hG2-8	91
+xmas.gat,149,136,5	duplicate(HealerG)	Curandeira#hG2-10	91
+comodo.gat,188,162,5	duplicate(HealerG)	Curandeira#hG2-11	91
+amatsu.gat,200,80,5	duplicate(HealerG)	Curandeira#hG2-12	91
+gonryun.gat,164,130,5	duplicate(HealerG)	Curandeira#hG2-13	91
+yuno.gat,152,186,5	duplicate(HealerG)	Curandeira#hG2-14	91
+niflheim.gat,188,180,5	duplicate(HealerG)	Curandeira#hG2-15	91
+louyang.gat,225,103,5	duplicate(HealerG)	Curandeira#hG2-16	91
+payon,195,146,4	duplicate(HealerG)	Curandeira#hG2-17	91
+brasilis,204,151,4	duplicate(HealerG)	Curandeira#hG2-18	91
+izlude,123,87,4	duplicate(HealerG)	Curandeira#hG2-19	91
+amatsu,102,152,4	duplicate(HealerG)	Curandeira#hG2-20	91
+jawaii,210,162,3	duplicate(HealerG)	Curandeira#hG2-22	91
+einbroch,69,203,4	duplicate(HealerG)	Curandeira#hG2-23	91
+lighthalzen,153,100,4	duplicate(HealerG)	Curandeira#hG2-24	91
+einbech,173,132,4	duplicate(HealerG)	Curandeira#hG2-25	91
+hugel,124,135,4	duplicate(HealerG)	Curandeira#hG2-26	91
+veins,210,121,4	duplicate(HealerG)	Curandeira#hG2-27	91
+manuk,264,142,4	duplicate(HealerG)	Curandeira#hG2-28	91
+splendide,196,152,4	duplicate(HealerG)	Curandeira#hG2-29	91
+rachel,112,142,3	duplicate(HealerG)	Curandeira#hG2-30	91
+moscovia,242,190,3	duplicate(HealerG)	Curandeira#hG2-31	91
+job_wiz,121,100,4	duplicate(HealerG)	Curandeira#hG2-32	91
+kh_kiehl02,59,29,4	duplicate(HealerG)	Curandeira#hG2-33	91

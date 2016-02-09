@@ -1,0 +1,155 @@
+prontera,149,176,5	script	Guia PortalRag	852,5,5,{
+mes "[^FF8000Guia PortalRag^000000]";
+cutin "ein_soldier.bmp",2;
+mes "Olá ^0000CD"+strcharinfo(0)+"^000000 ,Eu sou o Guia do PortalRag eu posso te ajudar a encontrar varios lugares no momento eu posso te levar para os Lugares a baixo para qual deseja ir?";
+switch(select("Casa dos Ferreiros:Local das Quests:Entrada Point Guild:Lojas/Mercadores:Loja de Donates:Informações")) {
+
+case 1:
+next;
+mes "[^FF8000Guia PortalRag^000000]";
+mes "Tem certeza que deseja ir pra ^FF8000Casa do Ferreiros^000000?";
+switch(select("Sim:Não")) {
+
+case 1:
+next;
+mes "[^FF8000Guia PortalRag^000000]";
+mes "Ok você te levar até lá boa viajem";
+warp "prt_in", 60, 72;
+cutin "",255;
+close;
+
+case 2:
+next;
+mes "[^FF8000Guia PortalRag^000000]";
+mes "Ok volte quando quiser";
+cutin "",255;
+close;
+}
+
+case 2:
+next;
+mes "[^FF8000Guia PortalRag^000000]";
+mes "Tem certeza que deseja ir para o ^FF8000Local das Quest^000000?";
+switch(select("Sim:Não")) {
+
+case 1:
+next;
+mes "[^FF8000Guia PortalRag^000000]";
+mes "Ok você te levar até lá boa viajem";
+warp "prontera", 155, 255;
+cutin "",255;
+close;
+
+case 2:
+next;
+mes "[^FF8000Guia PortalRag^000000]";
+mes "Ok volte quando quiser";
+cutin "",255;
+close;
+}
+
+case 3:
+next;
+mes "[^FF8000Guia PortalRag^000000]";
+mes "Tem certeza que deseja ir para o Local dos ^FF8000Point Guilds^000000??";
+switch(select("Sim:Não")) {
+
+case 1:
+next;
+mes "[^FF8000Guia PortalRag^000000]";
+mes "Ok você te levar até lá boa viajem";
+warp "morocc", 158, 101;
+cutin "",255;
+close;
+
+case 2:
+next;
+mes "[^FF8000Guia PortalRag^000000]";
+mes "Ok volte quando quiser";
+cutin "",255;
+close;
+}
+
+case 4:
+next;
+mes "[^FF8000Guia PortalRag^000000]";
+mes "Tem certeza que deseja ir para o Local das ^FF8000Lojas dos Mercadores^000000??";
+switch(select("Sim:Não")) {
+
+case 1:
+next;
+mes "[^FF8000Guia PortalRag^000000]";
+mes "Ok você te levar até lá boa viajem";
+warp "ayothaya", 151, 157;
+cutin "",255;
+close;
+
+case 2:
+next;
+mes "[^FF8000Guia PortalRag^000000]";
+mes "Ok volte quando quiser";
+cutin "",255;
+close;
+}
+
+case 5:
+next;
+mes "[^FF8000Guia PortalRag^000000]";
+mes "Tem certeza que deseja ir para o Local da ^FF8000Loja de Donates/Customs e da Gerenciada^000000???";
+switch(select("Sim:Não")) {
+
+case 1:
+next;
+mes "[^FF8000Guia PortalRag^000000]";
+mes "Ok você te levar até lá boa viajem";
+warp "prontera", 167, 228;
+cutin "",255;
+close;
+
+case 2:
+next;
+mes "[^FF8000Guia PortalRag^000000]";
+mes "Ok volte quando quiser";
+cutin "",255;
+close;
+}
+
+case 6:
+next;
+mes "[^FF8000Guia PortalRag^000000]";
+mes "1° Informação Casa dos Ferreiros";
+mes "Eo local onde fica os NPCs de Refinar Equipamentos,Refinar Arma +10,Remover Cartas,Compra Minerios e etc...";
+next;
+mes "[^FF8000Guia PortalRag^000000]";
+mes "2° Informação Local das Quests";
+mes "Eo Local onde fica concentrado a maior quantidade de quest do portalrag";
+next;
+mes "[^FF8000Guia PortalRag^000000]";
+mes "3° Informação Entrada Point Guild";
+mes "Ea entrada do Point Guild pros membros novos que não sabem o warp por lá você poderá ver qual ea entrada mais rapida";
+next;
+mes "[^FF8000Guia PortalRag^000000]";
+mes "4° Informação Lojas Mercadores";
+mes "Eo Local onde fica a Maior concentração dos mercadores os @at/autotrade as famosas Lojinhas";
+next;
+mes "[^FF8000Guia PortalRag^000000]";
+mes "5° e Ultima Informção Loja de Donates/Custom e Gerenciadora";
+mes "Eo Local onde fica os NPC que vende item Custom, que vende itens em promoção e ao lado tem o npc de Gerenciador";
+mes "onde você pode transferir cash e fazer senha PIM para maior pronteção";
+next;
+mes "[^FF8000Guia PortalRag^000000]";
+mes "Por enquanto e só isso até mais...";
+cutin "",255;
+close;
+}
+OnTouch:
+if(getgmlevel() > 9){
+end;
+}else{
+npctalk "Psiu "+strcharinfo(0)+",... Eu sou o Guia do PortalRAG posso ajudar?";
+sleep 5000;
+end;
+}
+}
+
+

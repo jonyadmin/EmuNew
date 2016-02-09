@@ -1,0 +1,11 @@
+prontera,183,193,4	script	Funcionária Kafra::kaf_prontera12	4_F_KAFRA3,{
+	cutin "kafra_03",2;
+	callfunc "F_KafSet";
+	mes "[Funcionária Kafra]";
+	mes "Bem vindo à Corporação Kafra.";
+	mes "Os serviços da Corporação Kafra estão sempre ao seu lado.";
+	mes "Como posso ajudar?";
+	callfunc "F_Kafra",5,0,0,40,800;
+	savepoint "prontera",155,193;
+	callfunc "F_KafEnd",0,1,"no Suporte";
+}

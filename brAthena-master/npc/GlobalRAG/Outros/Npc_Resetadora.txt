@@ -1,0 +1,184 @@
+//  ________________________________________________________
+// /                                                        \
+// |       _           _   _   _                            |
+// |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+// |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+// |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+// |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+// |                                                        |
+// |                     brAthena Script                    |
+// |--------------------------------------------------------|
+// | Nome do Script: Resetadora                             |
+// |--------------------------------------------------------|
+// | Criado por: eA/brA Dev. Team                           |
+// |--------------------------------------------------------|
+// | Versões brA: 1.0                                       |
+// |--------------------------------------------------------|
+// | Descrição: NPC para resetar atributos, habilidades e   |
+// | ambos, podendo configurar preço de cada um.            |
+// |--------------------------------------------------------|
+// | Changelog:               	                            |
+// | 1.0 Script Criado [Equipe brAthena]                    |
+// | 1.1 Corrigido problema com array. [Protimus]			|
+// \________________________________________________________/
+
+prontera,124,209,6	script	Resetadora	90,{
+	mes "[Resetadora Suprema]";
+	mes "Eu sou a resetadora.";
+	mes "Resetar atributos: ^0000FF"+.preco[1]+"z^000000.";
+	mes "Resetar habilidades: ^0000FF"+.preco[2]+"z^000000.";
+	mes "Resetar ambos: ^0000FF"+.preco[3]+"z^000000.";
+	mes "Resetar Posição: ^0000FFGratis^000000.";
+	mes "Resetar Aparência: ^0000FFGratis^000000.";
+	mes "Ver Todos os Chars: ^0000FFGratis^000000.";
+	mes "Remover SkillPoint: ^0000FFGratis^000000.";
+	mes "Por favor, escolha o que desejas:";
+	next;
+	switch(select("^FF3355Resetar Atributos.^000000:^FF3355Resetar habilidades.^000000:^FF3355Resetar ambos.^000000:^FF3355Resetar Posição.^000000:^FF3355Resetar Aparência.^000000:^FF3355Ver Meus Chars.^000000:^FF3355Remover SkillPoint^000000:Informações:Sair")) {
+	
+	case 1:
+	mes "[Resetadora Suprema]";
+	if(Zeny < .preco[@menu]){
+		mes "Desculpe-me, mas você não possui zenys suficientes";
+		close;
+	} else {
+	mes "[Resetadora Suprema]";
+	mes "Prontinho";
+	set Zeny,Zeny - .preco[@menu];
+	if(@menu != 2) resetstatus;
+	if(@menu != 1) resetskill;
+	close;
+	}
+	
+	case 2:
+	mes "[Resetadora Suprema]";
+	if(Zeny < .preco[@menu]){
+		mes "Desculpe-me, mas você não possui zenys suficientes";
+		close;
+	} else {
+	mes "[Resetadora Suprema]";
+	mes "Prontinho";
+	set Zeny,Zeny - .preco[@menu];
+	if(@menu != 2) resetstatus;
+	if(@menu != 1) resetskill;
+	close;
+	}
+	
+	case 3:
+	mes "[Resetadora Suprema]";
+	if(Zeny < .preco[@menu]){
+		mes "Desculpe-me, mas você não possui zenys suficientes";
+		close;
+	} else {
+	mes "[Resetadora Suprema]";
+	mes "Prontinho";
+	set Zeny,Zeny - .preco[@menu];
+	if(@menu != 2) resetstatus;
+	if(@menu != 1) resetskill;
+	close;
+	}
+	
+	case 4:
+	mes "[Resetadora Suprema]";
+	mes "Digite o nome do char que você quer resetar a posição";
+	input .@conta$;	
+	query_sql "SELECT `account_id`,`char_id` FROM `char` WHERE `name`='"+.@conta$+"'",.@cont,.@Idchar;
+	query_sql "SELECT `last_map`,`last_x`,`last_y` FROM `char` WHERE `char_id`='"+.@Idchar+"'",.@Map,.@Mapx,.@Mapy;
+
+	if(.@cont == getcharid(3)){
+	next;
+	mes "[Resetadora Suprema]";
+		mes "A posição "+.@conta$+", do char foi Resetada";
+		close2;
+		query_sql "update `char` set `last_map`='prontera' where `char_id` = '"+.@Idchar+"'";
+		query_sql "update `char` set `last_x`='150' where `char_id` = '"+.@Idchar+"'";
+		query_sql "update `char` set `last_y`='150' where `char_id` = '"+.@Idchar+"'";
+		end;
+	} else {
+	next;
+	mes "[Resetadora Suprema]";
+	mes "Desculpe mais esse Personagem não existe ou não e da sua Conta! volte aqui quando quiser resetar algum char seu!";
+	close;
+	}
+	
+	case 5:
+	mes "[Resetadora Suprema]";
+	mes "Digite o nome do char que você quer resetar a Aparencia";
+	input .@conta$;	
+	query_sql "SELECT `account_id`,`char_id` FROM `char` WHERE `name`='"+.@conta$+"'",.@cont,.@Idchar;
+	query_sql "SELECT `hair`,`hair_color`,`clothes_color` FROM `char` WHERE `char_id`='"+.@Idchar+"'",.@cabelo,.@cor_c,.@roupa_c;
+
+	if(.@cont == getcharid(3)){
+	next;
+	mes "[Resetadora Suprema]";
+		mes "A Aparencia "+.@conta$+", do char foi Resetada";
+		close2;
+		query_sql "update `char` set `hair`='1' where `char_id` = '"+.@Idchar+"'";
+		query_sql "update `char` set `hair_color`='1' where `char_id` = '"+.@Idchar+"'";
+		query_sql "update `char` set `clothes_color`='1' where `char_id` = '"+.@Idchar+"'";
+		end;
+	} else {
+	next;
+	mes "[Resetadora Suprema]";
+	mes "Desculpe mais esse Personagem não existe ou não e da sua Conta! volte aqui quando quiser resetar algum char seu!";
+	close;
+	}
+	
+	case 6:
+	mes "[Resetadora Suprema]";
+	mes "Todos os seus chars";
+set .@ACC,getcharid(3);
+	query_sql( "SELECT `name`,`char_id`,`account_id` FROM `char` where `account_id` ='"+.@ACC+"' order by char_id desc limit 21",.@Name$,.@Idchar,.@ACC1 );
+	for( set .@i,0; .@i < getarraysize( .@Name$ ); set .@i,.@i + 1 )
+		mes "[ "+( .@i + 1 )+". ] "+.@Name$[.@i]+"'";
+		close;
+	case 7:
+	mes "[Resetadora Suprema]";
+	mes "Você tem "+SkillPoint+" pontos de skill no momento";
+	next;
+	mes "[Resetadora Suprema]";
+	mes "Deseja remover seus skill point que sobraram?";
+	if(select("Não:Sim") == 1) close;
+	next;
+	mes "[Resetadora Suprema]";
+	set SkillPoint, 0;
+	mes "Seus Pontos que estavam sobrando foram removidos!";
+	close;
+	
+	case 8:
+	mes "[Resetadora Suprema]";
+	mes "Se você escolher Resetar Atributos os status como str,dex,luk,int e etc... serão resetador e você poderá refazer sua build";
+	next;
+	mes "[Resetadora Suprema]";
+	mes "Se você escolher Resetar Skill os Pontos de skill voltaram pra sua barras e você poderá espalha-los novamente";
+	next;
+	mes "[Resetadora Suprema]";
+	mes "Se você escolher ambos os pontos e status de atributos e skill serão resetados";
+	next;
+	mes "[Resetadora Suprema]";
+	mes "Se você escolher Resetar posição você poderá escolher um char da sua conta para mover para prontera";
+	next;
+	mes "[Resetadora Suprema]";
+	mes "Se você escolher Resetar Aparência você poderá escolher um char da sua conta para resetar Aparência dele";
+	next;
+	mes "[Resetadora Suprema]";
+	mes "Se você escolher Ver chars você poderá ver todos os char da sua conta";
+	next;
+	mes "[Resetadora Suprema]";
+	mes "Se você escolher Remover Skill Point o npc irá retirar os pontos que estão sobrando na sua Barra de skill";
+	next;
+	mes "[Resetadora Suprema]";
+	mes "Bom e isso espero que fale comigo novamente Bye";
+	close;
+	
+	case 9:
+	mes "[Resetadora Suprema]";
+	mes "Ok volte Sempre!!";
+	close;
+	}
+	
+OnInit:
+	setarray .preco[1],5000,5000,9000; // Preço para resetar: [1] os atributos, [2] as habilidades e [3] ambos.
+	waitingroom "Resetadora",0;
+	end;
+}

@@ -1,0 +1,169 @@
+prontera,139,183,2	script	Habilidades de Platina	758,{
+
+	// ------------- Config -------------
+	set .@npc_name$, "[ Skill Master ]";
+	// ----------------------------------
+
+
+	mes .@npc_name$;
+	mes "Olá "+ strcharinfo(0) +"!";
+	mes "Eu posso te ensinar todas as Skills do seu job.";
+	mes " ";
+	mes "Deseja aprende-las?";
+	next;
+	if(select("- Sim, por favor:- Não, obrigado")==2)
+	{
+		next;
+		mes .@npc_name$;
+		mes "Ok, volte quando quiser.";
+		close;
+	}
+	next;
+	mes "Pronto, aí estão suas Skills!";
+	skill 142,1,0;
+
+		switch(Class){
+
+		// Novice - High Novice - Baby Novice
+		case 0: case 4001: case 4023:
+			skill 143,1,0; // Play Dead
+			break;
+
+		// Swordsman - High Swordsman - Baby Swordsman
+		case 1: case 4002: case 4024:
+			skill 144,1,0; // Moving HP-Recovery
+			skill 145,1,0; // Fatal Blow
+			skill 146,1,0; // Auto Berserk
+			break;
+
+		// Mage - High Mage - Baby Mage
+		case 2: case 4003: case 4025:
+			skill 157,1,0; // Energy Coat
+			break;
+
+		// Archer - High Archer - Baby Archer		
+		case 3: case 4004: case 4026:
+			skill 147,1,0; // Arrow Crafting
+			skill 148,1,0; // Arrow Repel
+			break;
+
+		// Acolyte - High Acolyte - Baby Acolyte
+		case 4: case 4005: case 4027:
+			skill 156,1,0; // Holy Light
+			break;
+
+		// Merchant - High Merchant - Baby Merchant
+		case 5: case 4006: case 4028:
+			atcommand "@questskill 153";
+			atcommand "@questskill 154";
+			atcommand "@questskill 155";
+			break;
+
+		// Thief - High Thief - Baby Thief
+		case 6: case 4007: case 4029:
+			atcommand "@questskill 149";
+			atcommand "@questskill 150";
+			atcommand "@questskill 151";
+			atcommand "@questskill 152";
+			break;
+
+		// Knight - Lord Knight - Baby Knight
+		case 7: case 13: case 4008: case 4014: case 4030: case 4036:
+			skill 1001,1,0; // Charge Attack
+			skill 359,1,0; // Frenesi
+			break;
+
+		// Priest - High Priest - Baby Priest
+		case 8: case 4009: case 4031:
+			skill 1014,1,0; // Redemptio
+			break;
+
+		// Wizard - High Wizard - Baby Wizard
+		case 9: case 4010: case 4032:
+			skill 1006,1,0; // Sight Blaster
+			break;
+
+		// Blacksmith - Whitesmith - Baby Blacksmith
+			case 10: 
+			case 4033: 
+			case 4011:
+			atcommand "@questskill 153";
+			atcommand "@questskill 154";
+			atcommand "@questskill 155";
+			skill 1012,1,0; // Unfair Trick
+			skill 1013,1,0; // Greed
+			break;
+
+		// Hunter - Sniper - Baby Hunter
+		case 11: case 4012: case 4034:
+			skill 1009,1,0; // Phantasmic Arrow
+			atcommand "@questskill 147";
+			atcommand "@questskill 148";
+			break;
+
+		// Assassin - Assassin Cross - Baby Assassin
+		case 12: case 4013: case 4035:
+			skill 1003,1,0; // Sonic Acceleration
+			skill 1004,1,0; // Throw Venom Knife
+			atcommand "@questskill 149";
+			atcommand "@questskill 150";
+			atcommand "@questskill 151";
+			atcommand "@questskill 152";
+			break;
+
+			break;
+
+		// Crusader - Paladin - Baby Crusader
+		case 14: case 21: case 4015: case 4022: case 4037: case 4044:
+			skill 1002,1,0; // Shrink
+			break;
+
+		// Monk - Champion - Baby Monk
+		case 15: case 4016: case 4038:
+			skill 1015,1,0; // Ki Translation
+			skill 1016,1,0; // Ki Explosion
+			break;
+
+		// Sage - Professor - Baby Sage
+		case 16: case 4017: case 4039:
+			skill 1007,1,0;
+			set @Element, 1; // Default: 1 - Water
+			switch(@Element)
+			{
+			case 1: skill 1008,1,0; // Water
+			case 2: skill 1017,1,0; // Earth
+			case 3: skill 1018,1,0; // Fire
+			case 4: skill 1019,1,0; // Wind
+			close;
+			}
+			break;
+
+		// Rogue - Stalker - Baby Rogue
+		case 17: case 4018: case 4040:
+			skill 1005,1,0; // Close Confine
+			break;
+
+		// Alchemist - Creator - Baby Alchemist
+		case 18: case 4019: case 4041:
+			skill 238,1,0; // Bioethics
+			break;
+
+		// Bard - Clown/Minstrel - Baby Bard
+		case 19: case 4020: case 4042:
+			skill 1010,1,0; // Pang Voice
+			break;
+
+		// Dancer - Gypsy - Baby Dancer
+		case 20: case 4021: case 4043:
+			skill 1011,1,0; // Wink of Charm
+			break;
+
+		// Todas as classes que não possuem QuestSkills
+		case 22: case 23: case 24: case 25: case 26:
+		case 4045: case 4046: case 4047: case 4048: case 4049:
+			skill 142,1,0;
+			break;
+
+		}
+	close;
+}

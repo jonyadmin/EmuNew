@@ -1,0 +1,120 @@
+//  _______________________________________________________
+// /                                                       \
+// |       _           _   _   _                            |
+// |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+// |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+// |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+// |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+// |                                                        |
+// |                 brAthena Script                        |
+// |--------------------------------------------------------|
+// | Nome do Script: Reparador de equipamentos              |
+// |--------------------------------------------------------|
+// | Criado por: Hold                                       |
+// |--------------------------------------------------------|
+// | Versões eA/brA: todas/todas                            |
+// |--------------------------------------------------------|
+// | Descrição: NPC que repara equipamentos dos jogadores.  |
+// |--------------------------------------------------------|
+// | Changelog:                                             |
+// | 1.0 - Versão inicial do script desenvolvida.           |
+// | 1.1 - Adicionado sistema de cobrança de item           |
+// |  &    Script otimizado (redução de várias linhas)      |
+// \_______________________________________________________/
+prt_in,58,54,1	script	Reparador	826,{
+
+// <-- Configurações
+	set .npcname$, "[ ^0000FFReparador^000000 ]"; // <-- Nome que será exibido nas falas
+	set .lvlneeded, 0; // <-- Level de VIP necessário para utilizar o NPC
+	set .charging, 10000; // <-- Cobrança de Zenys (Para desativar mude para 0)
+	set .item_needed, 0; // <-- ID do item necessário para reparo (Para desativar a cobrança mude a quantidade para 0)
+	set .item_qt, 0; // <-- Quantidade do item a ser cobrada
+// --          =//=          --
+	
+	if (getgmlevel () < .lvlneeded)
+	{
+		mes .npcname$;
+		mes "Desculpe-me, mas não posso ajudá-lo.";
+		close;
+	}
+	mes .npcname$;
+	mes "Olá "+strcharinfo (0)+", eu sou especialista em consertar equipamentos que foram danificados em batalha. Em que posso lhe ser útil?";
+	next;
+	if (select ("- Consertar equipamentos:- Nada obrigad"+(Sex ? "o" : "a")) == 2)
+	{
+		mes .npcname$;
+		mes "Está bem, "+((Sex)?"meu":"minha")+" jovem, volte quando quiser.";
+		close;
+	}
+	if (!getbrokenid (1))
+	{
+		mes .npcname$;
+		mes "Você não possui nenhum equipamento para ser consertado.";
+		close;
+	}
+	deletearray @brokenid[0],getarraysize (@brokenid);
+	set @i, 1;
+	while(getbrokenid (@i))
+	{
+		setarray @brokenid[@i-1],getbrokenid(@i);
+		set @i, @i+1;
+	}
+	mes .npcname$;
+	mes "Você possui "+getarraysize (@brokenid)+" equipamentos danificados.";
+	if (getarraysize (@brokenid) > 5)
+		mes "Exibindo ^FF00005^000000 equipamentos de ^FF0000"+getarraysize (@brokenid)+"^000000 danificados.";
+	next;
+	switch(select((@brokenid[0]?"- "+getitemname(@brokenid[0]):"")+":"+(@brokenid[1]?"- "+getitemname(@brokenid[1]):"")+":"+(@brokenid[2]?"- "+getitemname(@brokenid[2]):"")+":"+(@brokenid[3]?"- "+getitemname(@brokenid[3]):"")+":"+(@brokenid[4]?"- "+getitemname(@brokenid[4]):"")+":- Reparar todos:- Nenhum"))
+	{
+		case 1: set @trp, 1; break;
+		case 2: set @trp, 2; break;
+		case 3: set @trp, 3; break;
+		case 4: set @trp, 4; break;
+		case 5: set @trp, 5; break;
+		
+		case 6: // <-- Todos
+			if(Zeny < .charging * getarraysize(@brokenid))
+			{
+				mes .npcname$;
+				mes "Você não possui Zenys suficientes para reparar todos os equipamentos.";
+				close;
+			}
+			if (countitem(.item_needed) < .item_qt * getarraysize(@brokenid))
+			{
+				mes .npcname$;
+				mes "Você não possui os items necessários para reparação dos equipamentos.";
+				close;
+			}
+			atcommand "@repairall";
+			set Zeny, Zeny - .charging * getarraysize(@brokenid);
+			if(.item_qt)
+				delitem(.item_needed, .item_qt * getarraysize(@brokenid));
+			mes .npcname$;
+			mes "Pronto, o processo de reparação foi realizado com sucesso.";
+			close;
+			
+		case 7: // <-- Nenhum
+			mes .npcname$;
+			mes "Está bem, "+((Sex)?"meu":"minha")+" jovem, volte quando quiser.";
+			close;
+	}
+	if(Zeny < .charging)
+	{
+		mes .npcname$;
+		mes "Você não possui zenys suficientes para utilizar este serviço.";
+		close;
+	}
+	if (countitem(.item_needed) < .item_qt)
+	{
+		mes .npcname$;
+		mes "Você não possui os items necessários para reparação dos equipamentos.";
+		close;
+	}
+	repair(@trp);
+	set Zeny, Zeny - .charging;
+	if(.item_qt)
+		delitem(.item_needed, .item_qt);
+	mes .npcname$;
+	mes "Pronto, o processo de reparação foi realizado com sucesso.";
+	close;
+}

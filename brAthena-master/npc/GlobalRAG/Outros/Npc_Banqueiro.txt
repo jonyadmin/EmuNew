@@ -1,0 +1,175 @@
+prontera,170,181,4	script	Banco	833,{
+query_sql "SELECT `conta_id`,`poupanca` FROM `banco` WHERE `conta_id` = '"+getcharid(3)+"'",.@conta,@poupanca;
+mes "[Banco]";
+mes "Olá "+strcharinfo(0)+",";
+mes "^0000ffConta Poupança: "+@poupanca+" Zenys^000000";
+mes "O que você gostaria de fazer?";
+switch(select("- Depositar:- Sacar:- Informações:- Sair")) {
+
+case 1:
+next;
+mes "[Banco]";
+mes "Qual Conta você quer depositar?";
+switch(select("- Conta Poupança:- Sair")) {
+
+case 1:
+next;
+set .@deposito_min,1;
+set .@deposito_max,2000000000;
+mes "[Banco]";
+mes "Digite a quantidade de Zenys que deseja depositar:";
+mes "Lembrando que:";
+mes "Valor Minimo:^0000ff1 Zeny^000000";
+mes "Valor Maximo:^0000ff2000000000 Zeny^000000";
+input (@valor_deposito,.@deposito_min,.@deposito_max);
+if(@valor_deposito < 2)goto valor1;
+if(@valor_deposito > 2000000000)goto valorx;
+if (Zeny < @valor_deposito)goto valoralto;
+next;
+mes "(^0000ffConta Poupança^000000)";
+mes "Você deseja depositar:";
+mes "^0000ff"+@valor_deposito+" Zenys^000000?";
+switch(select("- Sim:- Não:- Sair")) {
+
+case 1:
+set @insere_deposito, @poupanca + @valor_deposito;
+if (@insere_deposito > 2147483645)goto limitex;
+set Zeny, Zeny - @valor_deposito;
+if (.@conta < 2000000) {
+query_sql "INSERT INTO `banco` (conta_id,poupanca) VALUES ('"+getcharid(3)+"', '"+@valor_deposito+"')";
+} else {
+query_sql "UPDATE `banco` SET `poupanca`=`poupanca`+'"+@valor_deposito+"' WHERE `conta_id` = '"+getcharid(3)+"'";
+}
+next;
+query_sql "SELECT `conta_id`,`poupanca` FROM `banco` WHERE `conta_id` = '"+getcharid(3)+"'",.@conta2,@poupanca2;
+mes .@npc$;
+mes "(^0000ffConta Poupança^000000)";
+mes "Depósito efetuado com sucesso!";
+mes "Seu novo saldo é de:";
+mes "^0000ff"+@poupanca2+" Zenys.";
+close;
+
+case 2:
+mes "[Banco]";
+mes "Volte quando quiser Depositar algum valor..";
+close;
+
+case 3:
+mes "Ok volte sempre";
+close;
+}
+
+
+case 2:
+next;
+mes "[Banco]";
+mes "Ok volte sempre..";
+close;
+}
+
+case 2:
+next;
+mes "[Banco]";
+mes "De qual conta você gostaria de Sacar?";
+switch(select("- Conta Poupança:- Sair")) {
+
+case 1:
+set .@saque_min,1;
+set .@saque_max,2000000000;
+mes "(^0000ffConta Poupança^000000)";
+mes "Você tem ^0000ff"+@poupanca+" Zenys^000000 disponíves para sacar.";
+mes "Digite a quantidade de Zenys que deseja sacar:";
+input (@valor_saque,.@saque_min,.@saque_max);
+next;
+if(@valor_saque < 2)goto valor1;
+if(@valor_saque > 2000000000)goto valorx;
+if (@valor_saque > @poupanca)goto maiorp;
+next;
+mes "(^0000ffConta Poupança^000000)";
+mes "Você deseja sacar:";
+mes "^0000ff"+@valor_saque+" Zenys^000000?";
+switch(select("- Sim:- Não:- Sair")) {
+
+case 1:
+set @verifica_max, Zeny + @valor_saque;
+if (@verifica_max > 2147483645)goto sacarmax;
+if (@valor_saque == @poupanca) {
+set Zeny, Zeny + @valor_saque;
+query_sql "UPDATE `banco` SET `poupanca`='0' WHERE `conta_id` = '"+getcharid(3)+"'";
+} else {
+set Zeny, Zeny + @valor_saque;
+query_sql "UPDATE `banco` SET `poupanca`=`poupanca`-'"+@valor_saque+"' WHERE `conta_id` = '"+getcharid(3)+"'";
+}
+next;
+query_sql "SELECT `poupanca` FROM `banco` WHERE `conta_id` = '"+getcharid(3)+"'",@poupanca3;
+mes "(^0000ffConta Poupança^000000)";
+mes "Saque efetuado com sucesso!";
+mes "Seu novo saldo é de:";
+mes "^0000ff"+@poupanca3+" Zenys.";
+close;
+
+case 2:
+mes "[Banco]";
+mes "Volte quando quiser Sacar algum valor..";
+close;
+
+case 3:
+mes "Ok volte sempre";
+close;
+}
+
+case 2:
+next;
+mes "[Banco]";
+mes "Ok volte sempre..";
+close;
+}
+
+case 3:
+next;
+mes "[Banco]";
+mes "O sistema de Banco funciona para armazenar seus Zenys de forma prática e segura.";
+mes "A Conta Poupança também permite que você adicione qualquer valor a qualquer momento.";
+mes "Porém, sempre que você adiciona uma quantidade de Zenys, você poderá sacar quando quiser.";
+close;
+	
+case 4:
+next;
+mes "[Banco]";
+mes "Volte sempre..";
+close;
+}
+
+valoralto:
+next;
+mes "[Banco]";
+mes "Desculpe, mas você não possui essa quantidade de Zenys!";
+close;
+
+limitex:
+next;
+mes "[Banco]";
+mes "Desculpe, mas você não pode depositar essa quantia, pois excederá o limite de Zenys.";
+close;
+
+maiorp:
+mes "[Banco]";
+mes "Desculpe, mas você não possui essa quantidade de Zenys!";
+close;
+
+sacarmax:
+next;
+mes "[Banco]";
+mes "Desculpe, mas você não pode tirar essa quantia, pois excederá o limite de Zenys.";
+close;
+
+valor1:
+mes "[Banco]";
+mes "Desculpe mais só aceitamos valores maior de 1 de Zeny!";
+close;
+
+valorx:
+mes "[Banco]";
+mes "Desculpe mais só aceitamos valores menores que 2000000000 de Zeny!";
+close;
+}
