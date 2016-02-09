@@ -11,7 +11,7 @@
 //====== Comentários ===========================================
 //= 1.0 - NPC Criado					 [NightmareA]
 //=============================================================
-prontera,166,206,5	script	Arena Duelo[1x1]  	728,{
+prontera,166,206,5	script	Arena Duelo[1x1]  	4_F_JOB_KNIGHT,{
 
 //========= Nome do NPC =============
 set @npc$,"[^FF0000Porteira Arena 1x1^000000]";
@@ -168,7 +168,7 @@ OnTimer362000:
 	stopnpctimer;
 	end;
 }
-pvp_n_1-5,99,98,4	script	Arena Duel#Mediador	899,{
+pvp_n_1-5,99,98,4	script	Arena Duel#Mediador	4_M_HUMAN_02,{
 set @npc$,"[^FF0000Mediador^000000]";
 mes @npc$;
 mes "Parabéns, você venceu o duelo !";mes "Volte mais vezes e mostre que e o Melhor!";
@@ -224,4 +224,12 @@ L_DESAFIADOR:
 	stopnpctimer "DUELTIMER01";
 	stopnpctimer "DUELTIMER02";
 	end;
-}pvp_n_1-5	mapflag	nowarptopvp_n_1-5	mapflag	nowarppvp_n_1-5	mapflag	nopenaltypvp_n_1-5	mapflag	nosave	SavePointpvp_n_1-5	mapflag	nobranchpvp_n_1-5	mapflag	pvppvp_n_1-5	mapflag	gvg	offpvp_n_1-5	mapflag	noteleport
+}
+pvp_n_1-5	mapflag	nowarpto
+pvp_n_1-5	mapflag	nowarp
+pvp_n_1-5	mapflag	nopenalty
+pvp_n_1-5	mapflag	nosave	SavePoint
+pvp_n_1-5	mapflag	nobranch
+pvp_n_1-5	mapflag	pvp
+pvp_n_1-5	mapflag	gvg	off
+pvp_n_1-5	mapflag	noteleport
