@@ -788,7 +788,7 @@ function	script	pvpm_func	{
 function	script	getMesPM	{ return getd("$@PM_Lang"+PM_Lang+"$["+getarg(0)+"]"); }
 
 //================== DUPLICATE ====================
-prontera,166,201,3	duplicate(PM_source)	[PvP] King#1	843
+prontera,166,201,3	duplicate(PM_source)	[PvP] King#1	4_M_THAIONGBAK
 //================== WOE =====================
 
 //Necessário para ativar o sistema de contagem dos pontos na woe.
